@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <div class = "one"><h4>Замовлення на придбання товару</h4></div>
+            <div class = "two">
+                <p>Назва товару</p>
+                <select>
+                    <option value="1">Гарри Поттер - 20.5</option>
+                    <option value="2">Кобзар - 3</option>
+                    <option value="3">Володар перснів - 5</option>
+                    <option value="4">Колобок - 13</option>
+                    <option value="5">Азбука - 24</option>
+                </select>
+            </div>
+            <div class = "two three">
+                <label>Кількість:</label>
+                <input type = "text" id = "inp_count"  onchange="get_price()">
+                <label>Вартість:</label>
+                <input type = "text" id = "inp_cost">
+            </div>
+            <div class="two three">
+                <p>Спосіб доставки замовлення</p>
+                <label><input type = "radio" name = "deliv" value = "1" id = "rad_one">Поштою</label><br>
+                <label><input type = "radio" name = "deliv" value = "2" id = "rad_two">Доставка додому</label><br>
+                <label><input type = "checkbox" id = "checkb">У святковій упаковці</label>
+            </div>
+            <div class = "two three four">
+                <label>Загальна вартість замовлення<input type = "text" id = "cost_main"></label>
+                <input type = "button" value = "Підрахувати" id = "btn_res" onclick="res_cost()">
+            </div>
+            <div class = "two three">
+                <p>Дані замовника</p>
+                <label>Ім'я:<input type = "text" id = "name"></label>
+                <label>Адреса:<input type = "text" id = "second_name"></label>
+            </div>
+            <div class = "two three five">
+                <input type = "button" value = "Відновити початкові значення полів" onclick="come_back()">
+                <input type = "button" value = "Відіслати дані" onclick="is_empty()">             
+            </div>
+        </fieldset>
+    </form>
+
+    <table id = "table">
+        <tr>
+            <td>Книга</td>
+            <td id = "book"></td>
+        </tr>
+        <tr>
+            <td>Кількість</td>
+            <td id = "count_table"></td>
+        </tr>
+        <tr>
+            <td>Вартість</td>
+            <td id = "cost_one_table"></td>
+        </tr>
+        <tr>
+            <td>Спосіб доставки замовлення</td>
+            <td id = "radio_table"></td>
+        </tr>
+        <tr>
+            <td>Загальна вартість замовлення</td>
+            <td id = "main_cost_table"></td>
+        </tr>
+        <tr>
+            <td>Ім'я</td>
+            <td id = "name_table"></td>
+        </tr>
+        <tr>
+            <td>Адреса</td>
+            <td id = "second_name_table"></td>
+        </tr>
+    </table>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        form{
+            background-color: rgb(133, 198, 218);
+            border: 1px solid black;
+            width: 700px;
+            margin: 50px auto ;
+            padding: 5px;
+        }
+        fieldset{
+        border: none;
+        }
+        .one{
+            border: 1px solid black;
+            padding: 0;
+            text-align: center;
+        }
+        .two{
+            border: 1px solid black;
+            margin-top: 3px;
+        }
+        #inp_count{
+            width: 100px;
+            height: 20px;
+        }
+        .three{
+            padding: 2px;
+        }
+        #inp_cost{
+            width: 100px;
+            height: 20px;
+        }
+        #cost_main{
+            margin-left: 10px;
+        }
+        #btn_res{
+            padding: 3px;
+        }
+        #btn_res, #cost_main{
+            width: 120px;
+            height: 25px;
+        }
+        .four{
+            padding-left: 33.5%;
+        }
+        .five{
+            padding-left: 53.5%;
+        }
+        table{
+            border: 1px solid black;
+            margin: 20px auto;
+            display: none;
+            width:400px;
+        }
+        tr, td{
+            border: 1px solid black;
+        }
+    </style>
+   <script>
+       let cost_of_book = document.querySelector("select");
+       let count = document.getElementById("inp_count");
+       let radio = document.querySelectorAll('input[name="deliv"]');
+       let name = document.getElementById("name");
+       let second_name = document.getElementById("second_name");
+       function get_price(){
+           let res = 0;
+            if(cost_of_book.value==1){
+                document.getElementById("inp_cost").value = 20.5 * Number(count.value) + " грн";
+                res = 20.5 * Number(count.value);
+            }
+            else if(cost_of_book.value==2){
+                document.getElementById("inp_cost").value = 3 * Number(count.value) + " грн";
+                res = 3 * Number(count.value);
+            }
+            else if(cost_of_book.value==3){
+                document.getElementById("inp_cost").value = 5 * Number(count.value) + " грн";
+                res = 5 * Number(count.value);
+            }
+            else if(cost_of_book.value==4){
+                document.getElementById("inp_cost").value = 13 * Number(count.value) + " грн";
+                res = 13 * Number(count.value);
+            }
+            else if(cost_of_book.value==5){
+                document.getElementById("inp_cost").value = 24 * Number(count.value) + " грн";
+                res = 24 * Number(count.value);
+            }
+            return res;
+       }
+       function res_cost(){
+        if(count.value==''){
+                alert("Вкажіть кількість книг!");
+            }
+            else if(!document.getElementById("rad_one").checked && !document.getElementById("rad_two").checked){
+                alert("Вкажіть спосіб доставки!");
+            }
+        for (const f of radio) {
+            if (f.checked) {
+                if(f.value==1){
+                    res_sum = get_price()*1.05;
+                }
+                else{
+                    res_sum = get_price()*1.15;
+                }
+            }
+        }
+
+        if(document.getElementById("checkb").checked){
+            res_sum +=get_price()*0.1;
+        }
+        document.getElementById("cost_main").value = res_sum +" грн";
+        return res_sum;
+       }
+
+       function come_back(){
+           count.value = null;
+           document.getElementById("inp_cost").value = null;
+           for (const f of radio) {
+            if (f.checked) {
+                f.checked = false;
+            }
+            }
+            document.getElementById("checkb").checked = false;
+            document.getElementById("cost_main").value = null;
+            name.value = null;
+            second_name.value = null;
+            document.getElementById('table').style.display = 'none';
+       }
+       function is_empty(){
+            if(count.value==''){
+                alert("Вкажіть кількість книг!");
+            }
+            else if(!document.getElementById("rad_one").checked && !document.getElementById("rad_two").checked){
+                alert("Вкажіть спосіб доставки!");
+            }
+            else if(name.value ==''){
+               alert("Вкажіть ім'я!"); 
+            }
+            else if(second_name.value ==''){
+               alert("Вкажіть адресу доставки!"); 
+            }
+            else{
+                create_table();
+            }
+
+       }
+       function create_table(){
+            document.getElementById('table').style.display = 'block';
+            document.getElementById("book").innerText = cost_of_book.textContent;
+            if(cost_of_book.value==1){
+                document.getElementById("book").innerText = cost_of_book[0].textContent;
+            }
+            else if(cost_of_book.value==2){
+                document.getElementById("book").innerText = cost_of_book[1].textContent;
+            }
+            else if(cost_of_book.value==3){
+                document.getElementById("book").innerText = cost_of_book[2].textContent;
+            }
+            else if(cost_of_book.value==4){
+                document.getElementById("book").innerText = cost_of_book[3].textContent;
+            }
+            else if(cost_of_book.value==5){
+                document.getElementById("book").innerText = cost_of_book[4].textContent;
+            }
+            document.getElementById("count_table").innerText = count.value;
+            document.getElementById("cost_one_table").innerText = get_price() +" грн";
+
+            for (const f of radio) {
+                if (f.checked) {
+                    if(f.value==1){
+                        if(document.getElementById("checkb").checked){
+                            document.getElementById("radio_table").innerText = "Пошта" + " + У святковій упаковці";
+                        }
+                    }
+                    else{
+                        if(document.getElementById("checkb").checked){
+                            document.getElementById("radio_table").innerText = "Доставка додому" + " + У святковій упаковці";
+                        }
+                    }
+                }
+            }
+            document.getElementById("main_cost_table").innerText = res_cost() + " грн";
+            document.getElementById("name_table").innerText = name.value;
+            document.getElementById("second_name_table").innerText = second_name.value;
+       }
+   </script>
+</body>
+</html>
